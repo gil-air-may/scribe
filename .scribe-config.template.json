@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "docsPath": "./session-docs",
+  "projectKeyword": "my-project",
+  "createdAt": "2026-02-26T15:00:00Z",
+  "lastSessionNumber": 0,
+  "preferences": {
+    "autoGenerateADRs": true,
+    "autoUpdateChangelog": true,
+    "includeCodeSnippets": true,
+    "maxSnippetLines": 20,
+    "timestampFormat": "YYYY-MM-DD-HH-MM",
+    "adrNumberFormat": "0000"
+  },
+  "metadata": {
+    "projectName": "",
+    "description": "",
+    "repository": "",
+    "team": []
+  }
+}

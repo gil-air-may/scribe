@@ -1,0 +1,49 @@
+{
+  "name": "session-scribe",
+  "version": "0.2.0",
+  "description": "Claude Code skill for automatic session documentation with project context loading",
+  "main": "skill.md",
+  "keywords": [
+    "claude-code",
+    "skill",
+    "documentation",
+    "session",
+    "adr",
+    "architectural-decisions",
+    "context",
+    "knowledge-management"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/scribe.git"
+  },
+  "claudeCode": {
+    "skillType": "documentation",
+    "version": "1.0.0",
+    "skills": {
+      "scribe": {
+        "entrypoint": "skill.md",
+        "description": "Document current Claude Code session",
+        "usage": "@scribe"
+      },
+      "scribe-load": {
+        "entrypoint": "scribe-load.md",
+        "description": "Load previous session context by project keyword",
+        "usage": "@scribe-load <project-keyword>"
+      }
+    }
+  },
+  "files": [
+    "skill.md",
+    "scribe-load.md",
+    "templates/",
+    "examples/",
+    "config-schema.json",
+    ".scribe-config.template.json",
+    "CONFIG.md",
+    "README.md",
+    "LICENSE"
+  ]
+}

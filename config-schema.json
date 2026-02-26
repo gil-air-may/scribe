@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Session Scribe Configuration",
+  "description": "Configuration schema for Session Scribe documentation tool",
+  "type": "object",
+  "required": ["version", "docsPath", "projectKeyword"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Configuration schema version",
+      "pattern": "^\\d+\\.\\d+$",
+      "default": "1.0"
+    },
+    "docsPath": {
+      "type": "string",
+      "description": "Path where documentation will be saved (relative or absolute)",
+      "examples": ["./session-docs", "./docs/sessions", "~/.scribe/my-project"]
+    },
+    "projectKeyword": {
+      "type": "string",
+      "description": "Unique keyword identifying this project (used in filenames and for @scribe-load)",
+      "pattern": "^[a-z0-9-]+$",
+      "minLength": 2,
+      "maxLength": 50,
+      "examples": ["my-api", "auth-service", "frontend-app"]
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "ISO 8601 timestamp when configuration was created",
+      "format": "date-time"
+    },
+    "lastSessionNumber": {
+      "type": "integer",
+      "description": "Counter for total sessions documented",
+      "minimum": 0,
+      "default": 0
+    },
+    "preferences": {
+      "type": "object",
+      "description": "User preferences for documentation generation",
+      "properties": {
+        "autoGenerateADRs": {
+          "type": "boolean",
+          "description": "Automatically create ADR when significant decisions are detected",
+          "default": true
+        },
+        "autoUpdateChangelog": {
+          "type": "boolean",
+          "description": "Automatically update changelog with each session",
+          "default": true
+        },
+        "includeCodeSnippets": {
+          "type": "boolean",
+          "description": "Include code snippets in documentation",
+          "default": true
+        },
+        "maxSnippetLines": {
+          "type": "integer",
+          "description": "Maximum lines to include in code snippets",
+          "minimum": 5,
+          "maximum": 100,
+          "default": 20
+        },
+        "timestampFormat": {
+          "type": "string",
+          "description": "Format for timestamps in filenames",
+          "enum": ["YYYY-MM-DD-HH-MM", "YYYY-MM-DD", "YYYYMMDD-HHMM"],
+          "default": "YYYY-MM-DD-HH-MM"
+        },
+        "adrNumberFormat": {
+          "type": "string",
+          "description": "Format for ADR numbering",
+          "enum": ["0000", "000", "00"],
+          "default": "0000"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional project metadata",
+      "properties": {
+        "projectName": {
+          "type": "string",
+          "description": "Full project name"
+        },
+        "description": {
+          "type": "string",
+          "description": "Brief project description"
+        },
+        "repository": {
+          "type": "string",
+          "description": "Git repository URL",
+          "format": "uri"
+        },
+        "team": {
+          "type": "array",
+          "description": "Team members working on this project",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
