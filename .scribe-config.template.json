@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "docsPath": "./session-docs",
+  "docsPath": "./scribe",
   "projectKeyword": "my-project",
   "createdAt": "2026-02-26T15:00:00Z",
   "lastSessionNumber": 0,

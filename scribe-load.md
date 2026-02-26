@@ -44,22 +44,29 @@ Read the `.scribe-config.json` file to get:
 
 ### 3. Read Documentation
 
-From the `docsPath`, read:
+From the `<docsPath>/<projectKeyword>/` directory, read:
 
 #### Latest Session Summary
+- Use Glob tool to find: `session-*.md` (sorted by timestamp, most recent first)
 - Read the most recent session file
 - Extract objectives, decisions, and files changed
 
 #### Recent Decisions (ADRs)
-- Read the 3 most recent ADR files
-- Extract key architectural decisions
+- Use Glob tool to find: `decision-*.md` (sorted by number, most recent 3)
+- Read the most recent ADR files
+- Extract key architectural decisions and their status
 
 #### Knowledge Base Index
+- Use Glob tool to find: `knowledge-*.md`
 - List all knowledge articles available
-- Present categories/topics documented
+- Present topics documented
+
+#### Change Logs
+- Use Glob tool to find: `change-*.md` (sorted by date)
+- Get recent changes
 
 #### Project README
-- Read the documentation README for overview
+- Read `<docsPath>/<projectKeyword>/README.md` for overview
 
 ### 4. Present Context
 
@@ -260,11 +267,21 @@ If user immediately invokes `@scribe` after `@scribe-load`, the scribe skill sho
 
 ## File Operations
 
-When reading documentation:
+When reading documentation from `<docsPath>/<projectKeyword>/`:
 
-1. **Use Read tool** for individual files
-2. **Use Glob tool** to find relevant files by pattern
-3. **Use Grep tool** to search within documentation
+1. **Use Glob tool** to find files by type:
+   - `session-*.md` - All session summaries (sorted by date)
+   - `decision-*.md` - All ADRs (sorted by number)
+   - `change-*.md` - All change logs (sorted by date)
+   - `knowledge-*.md` - All knowledge articles (alphabetical)
+
+2. **Use Read tool** for individual files once found
+
+3. **Use Grep tool** to search within documentation:
+   - Search all session files for a topic
+   - Find decisions mentioning specific technology
+   - Locate knowledge articles about a subject
+
 4. **Present concisely** - summarize rather than dumping full content
 
 ## Context Preservation

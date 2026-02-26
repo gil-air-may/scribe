@@ -66,7 +66,7 @@ During or after a coding session, invoke Session Scribe:
 ```
 
 On first use, you'll be asked:
-- Where to save documentation (default: `./session-docs`)
+- Where to save documentation (default: `./scribe`)
 - A project keyword for this project (e.g., "my-api", "web-app")
 
 Session Scribe will then:
@@ -105,24 +105,31 @@ This displays:
 
 ### Documentation Structure
 
-Session Scribe creates and maintains:
+Session Scribe creates and maintains a flat structure organized by project keyword:
 
 ```
-your-project/
-  session-docs/
-    README.md              # Documentation index
-    sessions/              # Session summaries
-      2026-02-26-11-30.md
-      2026-02-26-14-45.md
-    decisions/             # Architectural decisions
-      0001-use-typescript.md
-      0002-api-design.md
-    changes/               # Detailed change logs
-      2026-02-26.md
-    knowledge/             # Captured context
-      authentication.md
-      database-schema.md
+scribe/                                  # Documentation root
+  my-api/                                # Project keyword
+    README.md                            # Project index
+    session-2026-02-26-14-45.md         # Session summaries
+    session-2026-02-27-10-30.md
+    decision-0001-use-typescript.md      # Architectural decisions
+    decision-0002-api-design.md
+    change-2026-02-26.md                 # Daily change logs
+    change-2026-02-27.md
+    knowledge-authentication.md          # Knowledge articles
+    knowledge-database-schema.md
+  web-app/                               # Another project
+    README.md
+    session-2026-02-26-11-00.md
+    decision-0001-use-react.md
 ```
+
+**File Prefixes:**
+- `session-` - Session summaries
+- `decision-` - ADRs
+- `change-` - Change logs
+- `knowledge-` - Knowledge base
 
 ## Example Output
 
@@ -246,9 +253,9 @@ Session Scribe uses `.scribe-config.json` to store project-specific settings.
 On first invocation, Session Scribe prompts you to configure:
 
 1. **Documentation Location**
-   - `./session-docs` (default, in current project)
-   - `./docs/sessions` (in docs folder)
-   - `~/.scribe/[project-name]` (global location)
+   - `./scribe` (default, in current project)
+   - `./docs` (in docs folder)
+   - `~/.scribe` (global location for all projects)
    - Custom path
 
 2. **Project Keyword**
@@ -263,7 +270,7 @@ The `.scribe-config.json` stores your preferences:
 ```json
 {
   "version": "1.0",
-  "docsPath": "./session-docs",
+  "docsPath": "./scribe",
   "projectKeyword": "my-api",
   "preferences": {
     "autoGenerateADRs": true,
@@ -308,12 +315,12 @@ To centralize documentation across projects:
 
 ```json
 {
-  "docsPath": "~/.scribe/my-api",
+  "docsPath": "~/.scribe",
   "projectKeyword": "my-api"
 }
 ```
 
-All projects save to `~/.scribe/` for easy cross-project access.
+All projects save to `~/.scribe/[keyword]/` for easy cross-project access.
 
 ## Benefits
 

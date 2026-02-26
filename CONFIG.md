@@ -7,9 +7,9 @@ Session Scribe uses a `.scribe-config.json` file in your project directory to ma
 When you first invoke `@scribe` in a project, you'll be prompted to configure:
 
 1. **Documentation Location**
-   - `./session-docs` - In current project (default)
-   - `./docs/sessions` - In project's docs folder
-   - `~/.scribe/[project-name]` - Global location
+   - `./scribe` - In current project (default)
+   - `./docs` - In project's docs folder
+   - `~/.scribe` - Global location for all projects
    - Custom path
 
 2. **Project Keyword**
@@ -24,7 +24,7 @@ The `.scribe-config.json` file is created automatically:
 ```json
 {
   "version": "1.0",
-  "docsPath": "./session-docs",
+  "docsPath": "./scribe",
   "projectKeyword": "my-project",
   "createdAt": "2026-02-26T15:00:00Z",
   "lastSessionNumber": 0,
@@ -108,14 +108,14 @@ This metadata appears in documentation headers and helps organize multi-project 
 
 ```json
 {
-  "docsPath": "./session-docs",
+  "docsPath": "./scribe",
   "projectKeyword": "my-api"
 }
 ```
 
-Creates: `./session-docs/` in your project
+Creates: `./scribe/my-api/` in your project
 
-Files: `my-api-2026-02-26-14-45.md`
+Files: `session-2026-02-26-14-45.md`, `decision-0001-title.md`, etc.
 
 ### Global Documentation Repository
 

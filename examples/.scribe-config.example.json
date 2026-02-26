@@ -1,9 +1,9 @@
 {
   "version": "1.0",
-  "docsPath": "./session-docs",
-  "projectKeyword": "session-scribe",
-  "createdAt": "2026-02-26T15:00:00Z",
-  "lastSessionNumber": 3,
+  "docsPath": "./scribe",
+  "projectKeyword": "my-api",
+  "createdAt": "2026-02-26T14:00:00Z",
+  "lastSessionNumber": 1,
   "preferences": {
     "autoGenerateADRs": true,
     "autoUpdateChangelog": true,
@@ -13,9 +13,9 @@
     "adrNumberFormat": "0000"
   },
   "metadata": {
-    "projectName": "Session Scribe",
-    "description": "Claude Code skill for automatic session documentation",
-    "repository": "https://github.com/yourusername/scribe",
+    "projectName": "My API",
+    "description": "Example API project demonstrating Session Scribe documentation",
+    "repository": "https://github.com/example/my-api",
     "team": ["Development Team"]
   }
 }

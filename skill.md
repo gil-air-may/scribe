@@ -22,9 +22,9 @@ If configuration does NOT exist:
    ```
    Question: "Where should Session Scribe save documentation?"
    Options:
-   - ./session-docs (default, in current project)
-   - ./docs/sessions (in docs folder)
-   - ~/.scribe/[project-name] (global location)
+   - ./scribe (default, in current project)
+   - ./docs (in docs folder)
+   - ~/.scribe (global location for all projects)
    - Other (custom path)
    ```
 
@@ -40,7 +40,7 @@ If configuration does NOT exist:
    ```json
    {
      "version": "1.0",
-     "docsPath": "./session-docs",
+     "docsPath": "./scribe",
      "projectKeyword": "my-project",
      "createdAt": "2026-02-26T15:00:00Z",
      "lastSessionNumber": 0,
@@ -86,20 +86,42 @@ Example: `my-api-2026-02-26-14-45.md`
 
 ## Documentation Repository Structure
 
-Create and maintain a documentation repository at `<project-root>/session-docs/`:
+Create and maintain a documentation repository organized by project keyword with a **flat structure**.
+
+The structure uses `<docsPath>/<projectKeyword>/` with file prefixes:
 
 ```
-session-docs/
-  README.md              # Overview and index
-  sessions/              # Session summaries
-    YYYY-MM-DD-HH-MM.md
-  decisions/             # Architectural Decision Records (ADRs)
-    NNNN-title.md
-  changes/               # Detailed change logs
-    YYYY-MM-DD.md
-  knowledge/             # Context and patterns
-    topic-name.md
+scribe/                         # Documentation root (from config docsPath)
+  my-api/                       # Project keyword subdirectory
+    README.md                   # Project index
+    session-2026-02-26-14-45.md
+    session-2026-02-27-10-30.md
+    decision-0001-use-typescript.md
+    decision-0002-api-design.md
+    change-2026-02-26.md
+    change-2026-02-27.md
+    knowledge-authentication.md
+    knowledge-database-schema.md
+  web-app/                      # Another project (if using shared docs)
+    README.md
+    session-2026-02-26-11-00.md
+    decision-0001-use-react.md
+    knowledge-state-management.md
 ```
+
+**File Naming Conventions:**
+- `session-YYYY-MM-DD-HH-MM.md` - Session summaries
+- `decision-NNNN-title.md` - Architectural Decision Records (ADRs)
+- `change-YYYY-MM-DD.md` - Daily change logs
+- `knowledge-topic-name.md` - Knowledge base articles
+- `README.md` - Project documentation index
+
+**Key Points:**
+- Each project gets its own directory using `projectKeyword`
+- All files are flat (no subdirectories) with type prefixes
+- Enables multiple projects to share a documentation repository
+- Particularly useful for monorepos or global documentation (~/.scribe/)
+- Simple glob patterns to find files: `session-*.md`, `decision-*.md`, etc.
 
 ## When to Activate
 
@@ -118,7 +140,7 @@ You should run when:
 
 ### 2. Session Summary Generation
 
-For each session, create `session-docs/sessions/YYYY-MM-DD-HH-MM.md`:
+For each session, create `<docsPath>/<projectKeyword>/session-YYYY-MM-DD-HH-MM.md`:
 
 ```markdown
 # Session: [Brief Title]
@@ -152,7 +174,7 @@ For each session, create `session-docs/sessions/YYYY-MM-DD-HH-MM.md`:
 
 ### 3. Architectural Decision Records (ADRs)
 
-When significant architectural decisions are made, create `session-docs/decisions/NNNN-title.md`:
+When significant architectural decisions are made, create `<docsPath>/<projectKeyword>/decision-NNNN-title.md`:
 
 ```markdown
 # ADR NNNN: [Decision Title]
@@ -179,7 +201,7 @@ When significant architectural decisions are made, create `session-docs/decision
 
 ### 4. Change Log Updates
 
-Update `session-docs/changes/YYYY-MM-DD.md` with detailed changes:
+Update or create `<docsPath>/<projectKeyword>/change-YYYY-MM-DD.md` with detailed changes:
 
 ```markdown
 # Changes - YYYY-MM-DD
@@ -194,7 +216,7 @@ Update `session-docs/changes/YYYY-MM-DD.md` with detailed changes:
 
 ### 5. Knowledge Capture
 
-When patterns or important context emerge, document in `session-docs/knowledge/`:
+When patterns or important context emerge, document in `<docsPath>/<projectKeyword>/knowledge-topic-name.md`:
 
 ```markdown
 # [Topic Name]
@@ -238,30 +260,38 @@ When patterns or important context emerge, document in `session-docs/knowledge/`
 
 ## README.md Template
 
-When creating or updating `session-docs/README.md`:
+When creating or updating `<docsPath>/<projectKeyword>/README.md`:
 
 ```markdown
-# Session Documentation
+# [Project Name] Documentation
 
 > Structured documentation automatically generated from Claude Code sessions.
 
+**Project Keyword:** [keyword]
+
 ## Latest Session
-- [YYYY-MM-DD HH:MM - Brief Title](sessions/YYYY-MM-DD-HH-MM.md)
+- [YYYY-MM-DD HH:MM - Brief Title](session-YYYY-MM-DD-HH-MM.md)
 
 ## Recent Decisions
-- [ADR NNNN: Decision Title](decisions/NNNN-title.md)
+- [ADR NNNN: Decision Title](decision-NNNN-title.md)
 
-## Documentation Structure
-- `sessions/` - Chronological session summaries
-- `decisions/` - Architectural Decision Records
-- `changes/` - Detailed change logs
-- `knowledge/` - Captured patterns and context
+## File Types
+- `session-*.md` - Chronological session summaries
+- `decision-*.md` - Architectural Decision Records (ADRs)
+- `change-*.md` - Daily change logs
+- `knowledge-*.md` - Captured patterns and context
 
-## Navigation
-- [All Sessions](sessions/)
-- [All Decisions](decisions/)
-- [All Changes](changes/)
-- [Knowledge Base](knowledge/)
+## All Sessions
+- [YYYY-MM-DD HH:MM - Session Title](session-YYYY-MM-DD-HH-MM.md)
+- [YYYY-MM-DD HH:MM - Session Title](session-YYYY-MM-DD-HH-MM.md)
+
+## All Decisions
+- [ADR NNNN: Decision Title](decision-NNNN-title.md)
+- [ADR NNNN: Decision Title](decision-NNNN-title.md)
+
+## Knowledge Base
+- [Topic Name](knowledge-topic-name.md)
+- [Topic Name](knowledge-topic-name.md)
 ```
 
 ## Your Workflow
@@ -269,11 +299,11 @@ When creating or updating `session-docs/README.md`:
 When invoked:
 
 1. **Check Configuration** - Load `.scribe-config.json`, run setup if missing
-2. **Initialize** - Check if documentation directory exists, create if needed
+2. **Initialize** - Ensure `<docsPath>/<projectKeyword>/` directory exists, create if needed
 3. **Analyze** - Review recent conversation and tool usage
 4. **Extract** - Pull out decisions, changes, and context
-5. **Generate** - Create appropriate documentation artifacts (with project keyword in filenames)
-6. **Index** - Update README.md with new content
+5. **Generate** - Create documentation files with appropriate prefixes (session-, decision-, change-, knowledge-)
+6. **Index** - Update `<docsPath>/<projectKeyword>/README.md` with new content
 7. **Update Config** - Increment session counter in `.scribe-config.json`
 8. **Summarize** - Provide user with brief summary of documentation created
 
